@@ -58,16 +58,24 @@ $(function () {
     var KeyCode_UP_1 = 38;
     var KeyCode_RIGHT_1 = 39;
     var KeyCode_DOWN_1 = 40;
-    var KeyCode_SHOOT_1 = 13; //enter
+    var KeyCode_SHOOT_1 = 32; //space
+    var KeyCode_SHOOT_2 = 13; //enter
     var KeyCode_LEFT_2 = 65; //a
     var KeyCode_UP_2 = 87; //w
     var KeyCode_RIGHT_2 = 68; //d
     var KeyCode_DOWN_2 = 83; //s
-    var KeyCode_SHOOT_2 = 32; //space
     var KeyCode_CTRL = 17;
     var KeyCode_Z = 90;
     var KeyCode_G = 71;
     var STEP = 5; //px per 1 step of moving
+    //direction of tank moving
+    var LEFT = 0;
+    var UP = 1;
+    var RIGHT = 2;
+    var DOWN = 3;
+    //last tank direction (for bullet)
+    var lastMoveTank1 = 0;
+    var lastMoveTank2 = 0;
 
     var player1Tank = $('.tank[data-player="1"]');
     var player2Tank = $('.tank[data-player="2"]');
@@ -76,7 +84,7 @@ $(function () {
       left: 0,
       right: $('.border').width() - $('.tank').width(),
       top: 15, //magic
-      bottom: $('.game-arena').height() - $('.tank').height() - parseInt($('.game-arena').css('border-width')) 
+      bottom: $('.game-arena').height() - $('.tank').height() - parseInt($('.game-arena').css('border-width'))
     }
 
     console.log(margins);
@@ -84,8 +92,8 @@ $(function () {
     //tank moving
     //rotate tank left
     function moveLeft(tank) {
-      var tankPosition = (parseInt(tank.css("left")) - 5);
-      if(tankPosition <= margins.left) {
+      var tankPosition = (parseInt(tank.css("left")) - 5);;
+      if (tankPosition <= margins.left) {
         tankPosition = tank.css("left");
       }
       tank.css({
@@ -97,7 +105,7 @@ $(function () {
     //rotate tank right
     function moveRight(tank) {
       var tankPosition = (parseInt(tank.css("left")) + 5);
-      if(tankPosition > margins.right) {
+      if (tankPosition > margins.right) {
         tankPosition = tank.css("left");
       }
       tank.css({
@@ -109,7 +117,7 @@ $(function () {
     //rotate tank up
     function moveUp(tank) {
       var tankPosition = (parseInt(tank.css("top")) - 5);
-      if(tankPosition < margins.top) {
+      if (tankPosition < margins.top) {
         tankPosition = tank.css("top");
       }
       tank.css({
@@ -121,7 +129,7 @@ $(function () {
     //rotate tank down
     function moveDown(tank) {
       var tankPosition = (parseInt(tank.css("top")) + 5);
-      if(tankPosition > margins.bottom) {
+      if (tankPosition > margins.bottom) {
         tankPosition = tank.css("top");
       }
       tank.css({
@@ -131,11 +139,74 @@ $(function () {
     }
 
     function shoot(tank) {
+      var user = tank.attr("data-player");
+      var lastDirection; //of moving tank
+      if (user == 1) {
+        lastDirection = lastMoveTank1;
+      } else {
+        lastDirection = lastMoveTank2;
+      }
       var bullet = $('<div class="tank-shoot-bullet" />');
-      $(tank).append(bullet);
-      setTimeout(function() {
+
+      //rotate bullet
+      switch (lastDirection) {
+        case 0: //left
+          bullet.css({
+            "transform": 'rotate(180deg)',
+            "left": parseInt(tank.css("left")) - 75,
+            "top": parseInt(tank.css("top")) + 22
+          });
+          break;
+        case 1: //up
+          bullet.css({
+            "transform": 'rotate(-90deg)',
+            "left": parseInt(tank.css("left")) + 12,
+            "top": parseInt(tank.css("top")) - 60
+          });
+          break;
+        case 2: //right
+          bullet.css({
+            "transform": 'rotate(00deg)',
+            "left": parseInt(tank.css("left")) + 95,
+            "top": parseInt(tank.css("top")) + 25
+          });
+          break;
+        case 3: //down
+          bullet.css({
+            "transform": 'rotate(90deg)',
+            "left": parseInt(tank.css("left")) + 10,
+            "top": parseInt(tank.css("top")) + 108
+          });
+          break;
+      }
+      $(".border").append(bullet); //add bullet to field
+      setInterval(function () {
+        switch (lastDirection) {
+          case 0: //left
+            bullet.css({
+              "left": parseInt(bullet.css("left")) - 10
+            });
+            break;
+          case 1: //up
+            bullet.css({
+              "top": parseInt(bullet.css("top")) - 10
+            });
+            break;
+          case 2: //right
+            bullet.css({
+              "left": parseInt(bullet.css("left")) + 10
+            });
+            break;
+          case 3: //down
+            bullet.css({
+              "top": parseInt(bullet.css("top")) + 10
+            });
+            break;
+        }
+      }, 100)
+      setTimeout(function () {
         bullet.remove();
-      }, 600)
+      }, 2222600)
     }
 
     document.body.onkeydown = function (e) {
@@ -143,27 +214,35 @@ $(function () {
 
       switch (e.keyCode) {
         case KeyCode_LEFT_1:
+          lastMoveTank1 = 0;
           moveLeft(player1Tank);
           break;
         case KeyCode_RIGHT_1:
+          lastMoveTank1 = 2;
           moveRight(player1Tank);
           break;
         case KeyCode_UP_1:
+          lastMoveTank1 = 1;
           moveUp(player1Tank);
           break;
         case KeyCode_DOWN_1:
+          lastMoveTank1 = 3;
           moveDown(player1Tank);
           break;
         case KeyCode_LEFT_2:
+          lastMoveTank2 = 0;
           moveLeft(player2Tank);
           break;
         case KeyCode_RIGHT_2:
+          lastMoveTank1 = 2;
           moveRight(player2Tank);
           break;
         case KeyCode_UP_2:
+          lastMoveTank1 = 1;
           moveUp(player2Tank);
           break;
         case KeyCode_DOWN_2:
+          lastMoveTank1 = 3;
           moveDown(player2Tank);
           break;
         case KeyCode_SHOOT_1:
@@ -193,15 +272,15 @@ $(function () {
     $('.end').removeClass('hide');
   }
 
-  function neveTank() {
-    var neveTanks = $('<div class="tank death" />');
-    $('.border').append(neveTanks);
-  }
+  // function neveTank() {
+  //   var neveTanks = $('<div class="tank death" />');
+  //   $('.border').append(neveTanks);
+  // }
 
-  function deatsh() {
-    var fireball = $('<div class="death-of-tank" />');
-    $('.death').append(fireball);
-  }
+  // function deatsh() {
+  //   var fireball = $('<div class="death-of-tank" />');
+  //   $('.death').append(fireball);
+  // }
 
   function TankPosition() {
     //show
