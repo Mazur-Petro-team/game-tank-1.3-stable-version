@@ -20,19 +20,21 @@
   <!--Game over window-->
   <div class="popup end hide">
     <div class="game-over">
-      <p>GAME OVER</p>
+      <h2 class="header">GAME OVER</h2>
       <button class="restart button">
         RESTART GAME
       </button>
     </div>
   </div>
-  <div class="timer">2:59</div>
+  <div class="timer"><span class="timer-minutes">2</span>:<span class="timer-seconds">59</span></div>
   <div class="game-arena">
     <span class="border">
       <span class="ghg">
-        <div id="tank" class="death"></div>
+        <div class="tank" class="death" data-player="1"></div>
       </span>
-    <div class="tank death"></div>
+      <span class="ghg">
+        <div class="tank" class="death" data-player="2"></div>
+      </span>
     </span>
   </div>
   <div class="info-block">
@@ -40,11 +42,11 @@
       <div class="player-1"></div>
     </div>
     <div class="key-controls-block">
-      <div class="black-block">
+      <div class="black-block" data-player="1">
         <h3>15</h3>
       </div>
       <p>: KILLED TANKS :</p>
-      <div class="black-block">
+      <div class="black-block" data-player="2">
         <h3>18</h3>
       </div>
     </div>

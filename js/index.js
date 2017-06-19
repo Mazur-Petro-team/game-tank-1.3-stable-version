@@ -23,6 +23,34 @@ $(function () {
     //Game control
     TankPosition();
     keyControls();
+
+    //timer
+    setTimer();
+  }
+
+  //Time for game
+  function setTimer() {
+    var gameTime = 3;
+    var endTime = new Date;
+    endTime.setMinutes(endTime.getMinutes() + gameTime);
+
+    var timer = setInterval(changeTime, 500);
+
+    function changeTime() {
+      var current = Date.now();
+      var timeOver = parseInt((endTime - current)/1000); //seconds
+      if(timeOver <= 0) {
+        clearInterval(timer);
+        gameOver();
+      }
+      var minutes = parseInt(timeOver/60);
+      var seconds = timeOver%60;
+      if(seconds < 10) {
+        seconds = "0" + seconds;
+      }
+      $('.timer .timer-minutes').text(minutes);
+      $('.timer .timer-seconds').text(seconds);
+    }
   }
 
   function keyControls() {
