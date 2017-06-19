@@ -2,9 +2,9 @@
 $(function() {
   TankPosition();
   keyControls();
-  setTimeout(function() { 
-    $('.welcome').remove();
-  }, 3000);
+  // setTimeout(function() { 
+  //   $('.welcome').remove();
+  // }, 3000000);
 });
 
 function keyControls() {
