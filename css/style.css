@@ -20,6 +20,7 @@ body{
   background-size: 100% 100%;
   animation: Boom 2.9s ease-in-out ;
   margin: 0 auto;
+  text-align: center;
 }
 .game-over{
   top:0;
