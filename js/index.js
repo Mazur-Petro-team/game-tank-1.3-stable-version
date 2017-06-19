@@ -3,12 +3,23 @@ $(function () {
   init();
 
   function init() {
-    $(".start").on("click", startGame);
+    $('.start').on('click', start);
+    $('.restart').on('click', restart);
+  }
+
+  function start() {
+    //Remove greeting window
+    $('.greeting').remove();
+    startGame()
+  }
+
+  function restart() {
+    //Hide game over
+    $('.end').addClass('hide');
+    startGame()
   }
 
   function startGame() {
-    //Remove greeting window
-    $(".greeting").remove();
     //Game control
     TankPosition();
     keyControls();
@@ -60,8 +71,7 @@ $(function () {
   }
 
   function gameOver() {
-    var gameOver = $('<div class="game-over"><br><br><br>GAME OVER<div class="button"><p>RESTART GAME</p></div></div></div>');
-    $('body').append(gameOver);
+    $('.end').removeClass('hide');
   }
 
   function neveTank() {

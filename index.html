@@ -8,17 +8,26 @@
 </head>
 
 <body>
-  <div class="greeting">
+  <div class="popup greeting">
     <div class="welcome">
       <div class="tank-png"></div>
-      <h1 class="main-header">WELCOME<br><span class="word-space word-to">TO</span>
+      <h1 class="main-header canter-text">WELCOME<br><span class="word-space word-to">TO</span>
         <br><span class="word-space word-tanks">THE TANKS</span>
       </h1>
       <button class="start button">Start</button>
     </div>
   </div>
+  <!--Game over window-->
+  <div class="popup end hide">
+    <div class="game-over">
+      <p>GAME OVER</p>
+      <button class="restart button">
+        RESTART GAME
+      </button>
+    </div>
+  </div>
+  <div class="timer">2:59</div>
   <div class="game-arena">
-    <div class="timer">2:59</div>
     <span class="border">
       <span class="ghg">
         <div id="tank" class="death"></div>
