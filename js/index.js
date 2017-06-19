@@ -72,10 +72,22 @@ $(function () {
     var player1Tank = $('.tank[data-player="1"]');
     var player2Tank = $('.tank[data-player="2"]');
 
+    var margins = {
+      left: 0,
+      right: $('.border').width() - $('.tank').width(),
+      top: 15, //magic
+      bottom: $('.game-arena').height() - $('.tank').height() - parseInt($('.game-arena').css('border-width')) 
+    }
+
+    console.log(margins);
+
     //tank moving
     //rotate tank left
     function moveLeft(tank) {
-      var tankPosition = (parseInt(tank.css("left")) - 5) + "px";
+      var tankPosition = (parseInt(tank.css("left")) - 5);
+      if(tankPosition <= margins.left) {
+        tankPosition = tank.css("left");
+      }
       tank.css({
         'left': tankPosition,
         'transform': 'rotate(180deg)'
@@ -84,7 +96,10 @@ $(function () {
 
     //rotate tank right
     function moveRight(tank) {
-      var tankPosition = (parseInt(tank.css("left")) + 5) + "px";
+      var tankPosition = (parseInt(tank.css("left")) + 5);
+      if(tankPosition > margins.right) {
+        tankPosition = tank.css("left");
+      }
       tank.css({
         'left': tankPosition,
         'transform': 'rotate(0deg)'
@@ -93,7 +108,10 @@ $(function () {
 
     //rotate tank up
     function moveUp(tank) {
-      var tankPosition = (parseInt(tank.css("top")) - 5) + 'px';
+      var tankPosition = (parseInt(tank.css("top")) - 5);
+      if(tankPosition < margins.top) {
+        tankPosition = tank.css("top");
+      }
       tank.css({
         'transform': 'rotate(-90deg)',
         'top': tankPosition
@@ -102,7 +120,10 @@ $(function () {
 
     //rotate tank down
     function moveDown(tank) {
-      var tankPosition = (parseInt(tank.css("top")) + 5) + 'px';
+      var tankPosition = (parseInt(tank.css("top")) + 5);
+      if(tankPosition > margins.bottom) {
+        tankPosition = tank.css("top");
+      }
       tank.css({
         'transform': 'rotate(90deg)',
         'top': tankPosition
@@ -187,12 +208,12 @@ $(function () {
     $('.tank').removeClass('hide');
     //first tank
     $('.tank[data-player="1"').css({
-      'top': '0px',
-      'left': '100px'
+      'top': '15px',
+      'left': '0px'
     });
     //second
     $('.tank[data-player="2"').css({
-      'top': '390px',
+      'top': '375px',
       'left': '980px',
       'transform': 'rotate(180deg)'
     });
