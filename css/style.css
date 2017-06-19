@@ -23,6 +23,7 @@ body {
 .popup {
   position: absolute;
   width: 100%;
+  z-index: 1;
 }
 
 .welcome,
@@ -134,7 +135,7 @@ h3 {
 
 .game-arena {
   margin: 0.5% auto 0;
-  width: 95%;
+  width: 1200px;
   height: 514px;
   border: 30px solid;
   border-image: url(../img/bricks.png);
@@ -154,24 +155,27 @@ h3 {
   display: block;
   overflow: hidden;
   background-color: black;
+  position: relative;
 }
 
-#tank,
 .tank {
   width: 95px;
   height: 47px;
   margin: 10px 0;
-  position: relative;
-  background: url(../img/Battle_Tank.png) center no-repeat;
+  position: absolute;
+  background-size: 100%;
+  margin: 8px 0;
+  overflow: hidden;
+}
+
+.tank[data-player="1"] {
+  background: url(../img/Battle_Tank1.png) center no-repeat;
   background-size: 100%;
 }
 
-.tank {
-  top: -56px;
-  left: 92.3%;
-  margin: 8px 0;
-  transform: rotate(180deg);
-  overflow: hidden;
+.tank[data-player="2"] {
+  background: url(../img/Battle_Tank1.png) center no-repeat;
+  background-size: 100%;
 }
 
 .tank-shoot-bullet {
