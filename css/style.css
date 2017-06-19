@@ -185,7 +185,6 @@ p {
   position: absolute;
   background: url(../img/bullet.png) 0px -30px no-repeat;
   background-size: 100%;
-  transition: 1000;
   overflow: hidden;
 }
 

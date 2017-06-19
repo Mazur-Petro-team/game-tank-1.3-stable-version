@@ -87,8 +87,6 @@ $(function () {
       bottom: $('.game-arena').height() - $('.tank').height() - parseInt($('.game-arena').css('border-width'))
     }
 
-    console.log(margins);
-
     //tank moving
     //rotate tank left
     function moveLeft(tank) {
@@ -180,33 +178,25 @@ $(function () {
           break;
       }
       $(".border").append(bullet); //add bullet to field
-      setInterval(function () {
-        switch (lastDirection) {
-          case 0: //left
-            bullet.css({
-              "left": parseInt(bullet.css("left")) - 10
-            });
-            break;
-          case 1: //up
-            bullet.css({
-              "top": parseInt(bullet.css("top")) - 10
-            });
-            break;
-          case 2: //right
-            bullet.css({
-              "left": parseInt(bullet.css("left")) + 10
-            });
-            break;
-          case 3: //down
-            bullet.css({
-              "top": parseInt(bullet.css("top")) + 10
-            });
-            break;
+      var timer = setInterval(function () {
+        var opponent;
+        var opponentDirection;
+        changeBulletPosition(lastDirection, bullet, timer);
+        if (user == 1) {
+          opponent = $(".tank[data-player=2]");
+          opponentDirection = lastMoveTank2;
+        } else {
+          opponent = $(".tank[data-player=1]");
+          opponentDirection = lastMoveTank1;
         }
-      }, 100)
-      setTimeout(function () {
-        bullet.remove();
-      }, 2222600)
+        if (matchTank(opponent, bullet, opponentDirection)) {
+          bullet.remove();
+          //select other player tank
+          deatsh(opponent); //burn
+          $('.rate[data-player=' + user + ']').text(+$('.rate[data-player=' + user + ']').text() + 1);
+          clearInterval(timer);
+        }
+      }, 10);
     }
 
     document.body.onkeydown = function (e) {
@@ -234,15 +224,15 @@ $(function () {
           moveLeft(player2Tank);
           break;
         case KeyCode_RIGHT_2:
-          lastMoveTank1 = 2;
+          lastMoveTank2 = 2;
           moveRight(player2Tank);
           break;
         case KeyCode_UP_2:
-          lastMoveTank1 = 1;
+          lastMoveTank2 = 1;
           moveUp(player2Tank);
           break;
         case KeyCode_DOWN_2:
-          lastMoveTank1 = 3;
+          lastMoveTank2 = 3;
           moveDown(player2Tank);
           break;
         case KeyCode_SHOOT_1:
@@ -252,24 +242,70 @@ $(function () {
           shoot(player2Tank);
           break;
       }
-
-      // } else if (e.keyCode == KeyCode_CTRL) {
-      //   deatsh();
-      //   setTimeout(function () {
-      //     $('.tank').remove();
-      //     $('#tank').remove();
-      //     $('<div class="death-of-tank" />').remove();
-      //   }, 2000);
-      // } else if (e.keyCode == KeyCode_Z) {
-      //   neveTank();
-      // } else if (e.keyCode == KeyCode_G) {
-      //   gameOver();
-      // }
     };
   }
 
   function gameOver() {
     $('.end').removeClass('hide');
+    document.body.onkeydown = null;
+  }
+
+  function changeBulletPosition(lastDirection, bullet, timer) {
+    //change position
+    switch (lastDirection) {
+      case 0: //left
+        bullet.css({
+          "left": parseInt(bullet.css("left")) - 20
+        });
+        break;
+      case 1: //up
+        bullet.css({
+          "top": parseInt(bullet.css("top")) - 20
+        });
+        break;
+      case 2: //right
+        bullet.css({
+          "left": parseInt(bullet.css("left")) + 20
+        });
+        break;
+      case 3: //down
+        bullet.css({
+          "top": parseInt(bullet.css("top")) + 20
+        });
+        break;
+    }
+    //remove bullet if needed
+    var bulletTop = parseInt(bullet.css("top"));
+    var bulletLeft = parseInt(bullet.css("left"));
+    if (bulletTop < 0 || bulletTop > $(".border").height() ||
+      bulletLeft < 0 || bulletLeft > $(".border").width()) {
+      bullet.remove();
+      clearInterval(timer);
+    }
+  }
+
+  function matchTank(tank, bullet, lastDirection) {
+    //match x
+    var bulletOffset = bullet.offset();
+    var tankOffset = tank.offset();
+    var tankHeight;
+    var tankWidth;
+
+    if (lastDirection == 0 || lastDirection == 2) { //left and right
+      tankHeight = tank.outerHeight();
+      tankWidth = tank.outerWidth();
+    } else { // up and down
+      tankHeight = tank.outerWidth();
+      tankWidth = tank.outerHeight();
+    }
+
+    if ((bulletOffset.left < tankOffset.left) || (bulletOffset.left > tankOffset.left + tankWidth)) {
+      return false;
+    } else if ((bulletOffset.top < tankOffset.top) || (bulletOffset.top > tankOffset.top + tankHeight)) {
+      return false;
+    }
+
+    return true;
   }
 
   // function neveTank() {
@@ -277,10 +313,10 @@ $(function () {
   //   $('.border').append(neveTanks);
   // }
 
-  // function deatsh() {
-  //   var fireball = $('<div class="death-of-tank" />');
-  //   $('.death').append(fireball);
-  // }
+  function deatsh(tank) {
+    var fireball = $('<div class="death-of-tank" />');
+    tank.append(fireball);
+  }
 
   function TankPosition() {
     //show
