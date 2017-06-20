@@ -328,8 +328,8 @@ $(function () {
     });
     //second
     $('.tank[data-player="2"').css({
-      'top': '375px',
-      'left': '980px',
+      'top': '85%',
+      'left': '92%',
       'transform': 'rotate(180deg)'
     });
   }
