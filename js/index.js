@@ -18,6 +18,7 @@ $(function () {
     $('.end').addClass('hide');
     $(".rate[data-player=1]").text(0);
     $(".rate[data-player=2]").text(0);
+    $(".tank-shoot-bullet").remove(); //remove all bullet if exist
     startGame()
   }
 
