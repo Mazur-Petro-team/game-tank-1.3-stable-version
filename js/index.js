@@ -16,6 +16,8 @@ $(function () {
   function restart() {
     //Hide game over
     $('.end').addClass('hide');
+    $(".rate[data-player=1]").text(0);
+    $(".rate[data-player=2]").text(0);
     startGame()
   }
 
@@ -30,7 +32,7 @@ $(function () {
 
   //Time for game
   function setTimer() {
-    var gameTime = 3;
+    var gameTime = 1;
     var endTime = new Date;
     endTime.setMinutes(endTime.getMinutes() + gameTime);
 
@@ -58,7 +60,7 @@ $(function () {
     var KeyCode_UP_1 = 38;
     var KeyCode_RIGHT_1 = 39;
     var KeyCode_DOWN_1 = 40;
-    var KeyCode_SHOOT_1 = 32; //space
+    var KeyCode_SHOOT_1 = 69; //e
     var KeyCode_SHOOT_2 = 13; //enter
     var KeyCode_LEFT_2 = 65; //a
     var KeyCode_UP_2 = 87; //w
@@ -328,8 +330,8 @@ $(function () {
     });
     //second
     $('.tank[data-player="2"').css({
-      'top': '85%',
-      'left': '92%',
+      'top': '375px',
+      'left': '980px',
       'transform': 'rotate(180deg)'
     });
   }
