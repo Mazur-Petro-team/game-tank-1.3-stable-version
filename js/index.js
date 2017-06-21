@@ -33,7 +33,7 @@ $(function () {
 
   //Time for game
   function setTimer() {
-    var gameTime = 1;
+    var gameTime = 3;
     var endTime = new Date;
     endTime.setMinutes(endTime.getMinutes() + gameTime);
 
