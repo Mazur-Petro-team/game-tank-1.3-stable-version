@@ -26,7 +26,6 @@ $(function () {
     //Game control
     TankPosition();
     keyControls();
-
     //timer
     setTimer();
   }
@@ -61,15 +60,15 @@ $(function () {
     var KeyCode_UP_1 = 38;
     var KeyCode_RIGHT_1 = 39;
     var KeyCode_DOWN_1 = 40;
-    var KeyCode_SHOOT_1 = 69; //e
-    var KeyCode_SHOOT_2 = 13; //enter
+    var KeyCode_SHOOT_1 = 17; //CTRL
+    var KeyCode_SHOOT_2 = 81; //q
     var KeyCode_LEFT_2 = 65; //a
     var KeyCode_UP_2 = 87; //w
     var KeyCode_RIGHT_2 = 68; //d
     var KeyCode_DOWN_2 = 83; //s
-    var KeyCode_CTRL = 17;
-    var KeyCode_Z = 90;
-    var KeyCode_G = 71;
+    // var KeyCode_CTRL = 17;
+    // var KeyCode_Z = 90;
+    // var KeyCode_G = 71;
     var STEP = 5; //px per 1 step of moving
     //direction of tank moving
     var LEFT = 0;
@@ -89,7 +88,6 @@ $(function () {
       top: 15, //magic
       bottom: $('.game-arena').height() - $('.tank').height() - parseInt($('.game-arena').css('border-width'))
     }
-
     //tank moving
     //rotate tank left
     function moveLeft(tank) {
@@ -102,7 +100,6 @@ $(function () {
         'transform': 'rotate(180deg)'
       });
     }
-
     //rotate tank right
     function moveRight(tank) {
       var tankPosition = (parseInt(tank.css("left")) + 5);
@@ -114,7 +111,6 @@ $(function () {
         'transform': 'rotate(0deg)'
       });
     }
-
     //rotate tank up
     function moveUp(tank) {
       var tankPosition = (parseInt(tank.css("top")) - 5);
@@ -126,7 +122,6 @@ $(function () {
         'top': tankPosition
       });
     }
-
     //rotate tank down
     function moveDown(tank) {
       var tankPosition = (parseInt(tank.css("top")) + 5);
@@ -326,14 +321,14 @@ $(function () {
     $('.tank').removeClass('hide');
     //first tank
     $('.tank[data-player="1"').css({
-      'top': '15px',
-      'left': '0px'
+      'top': '84.5%',
+      'left': '92%',
+      'transform': 'rotate(180deg)'
     });
     //second
     $('.tank[data-player="2"').css({
-      'top': '375px',
-      'left': '980px',
-      'transform': 'rotate(180deg)'
+      'top': '3%',
+      'left': '0%'
     });
   }
 });
