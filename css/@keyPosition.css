@@ -1,0 +1,61 @@
+
+.player-1-game-controls,
+.player-2-game-controls{
+  width: 360px;
+  height: 200px;
+  position: absolute;
+  transform: rotate(-15deg);
+  color: #F36F21;
+  font-size: 28px;
+  font-family: serif;
+  font-weight: 600;
+  margin: 145px 0 0 210px;
+}
+.player-1-game-controls .player-1,
+.player-2-game-controls .player-2{
+  width: 360px;
+  background-position: 0 -5px;
+  margin-bottom: -15px;
+}
+.player-2-game-controls {
+  margin: -90px 0 0 670px;
+}
+.ap,.down,.left,.right,.shoot{
+  background: url(../img/key.png) no-repeat -111px -3px;
+  background-size: 400px 103px;
+  width: 115px;
+  height: 35px;
+  margin: 11px -7px;
+  display: inline-block;
+  padding: 6px;
+}
+.ap::before,.down::before,.left::before {
+  position: absolute;
+  top:87px;
+  font-size: 19px;
+}
+.ap::before {
+  content: "AP";
+  left: 50px;
+}
+.down::before{
+  content: "DOWN";
+  left: 150px;
+}
+.left::before{
+  content: "LEFT";
+  left: 275px;
+}
+.right::before,.shoot::before{
+  position: absolute;
+  top:156px;
+  font-size: 19px;
+}
+.right::before{
+  content: "RIGHT";
+  left: 85px;
+}
+.shoot::before{
+  content: "SHOOT";
+  left: 205px;
+}
