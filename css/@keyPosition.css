@@ -35,7 +35,7 @@
   font-size: 19px;
 }
 .ap::before {
-  content: "AP";
+  content: "UP";
   left: 50px;
 }
 .down::before{
